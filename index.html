@@ -101,15 +101,16 @@
 
     let current = 0;
 
-        video.addEventListener('timeupdate', () => {
+    video.addEventListener('timeupdate', () => {
         if (video.currentTime >= stopTime && !video.paused) {
             video.pause();
-            video.removeAttribute('controls'); // XÓA THANH ĐIỀU KHIỂN ĐỂ KHÔNG ẤN PLAY ĐƯỢC
+            // LỖI 1: KHÓA CỨNG KHÔNG CHO TƯƠNG TÁC
+            video.removeAttribute('controls'); 
+            video.style.pointerEvents = 'none'; 
             overlay.style.display = 'block';
             questionText.innerText = quizData[current].q;
         }
     });
-
 
     function checkAnswer() {
         const val = document.getElementById('answer').value;
@@ -120,18 +121,17 @@
             if (current < quizData.length) {
                 questionText.innerText = quizData[current].q;
             } else {
-                // ĐOẠN NÀY ĐỂ NHÚNG VIDEO MẮT BÃO VÀO THAY VÌ CHUYỂN TRANG
+                // LỖI 2: XÓA SẠCH VIDEO CŨ, CHỈ HIỆN VIDEO MẮT BÃO
                 container.innerHTML = `
                     <h2>Tặng cậu Mắt Bão - Tọi 🎶</h2>
                     <iframe 
-    class="final-video" 
-    height="315" 
-    src="https://www.youtube.com/embed/qxLkN1G7n5A" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-</iframe>
-
+                        class="final-video" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/qxLkN1G7n5A" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
                     <p style="margin-top:10px; color:#ff6b81; font-weight:bold;">Hy vọng cậu thích bài này! 💖</p>
                 `;
             }
@@ -139,6 +139,7 @@
             alert("Sai rồi, thử lại nhé! 😋");
         }
     }
-</script>
+                </script>
+    
 </body>
 </html>
