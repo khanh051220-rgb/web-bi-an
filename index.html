@@ -3,37 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gửi cậu món quà bí mật 💖</title>
+    <title>Món quà bí mật 💖</title>
     <style>
+        /* Hiệu ứng nền */
         body { 
-            background: #fff0f5; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            padding: 10px;
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', cursive;
+            overflow-x: hidden;
         }
         .container { 
-            background: white; 
-            padding: 15px; 
-            border-radius: 25px; 
-            box-shadow: 0 10px 30px rgba(255,105,180,0.2); 
-            text-align: center; 
-            width: 100%; 
-            max-width: 500px; /* Tối ưu cho mobile */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
         }
-        h2 { font-size: 1.2rem; color: #ff6b81; margin-bottom: 15px; }
-        video { 
-            width: 100%; 
-            height: auto; 
-            border-radius: 20px; 
-            border: 3px solid #ffccd5;
-            display: block;
+        h2 { color: #ff4757; font-size: 2rem; margin-bottom: 20px; }
+        video, iframe { 
+            width: 100%;
+            border-radius: 25px;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        #quiz-overlay { 
-            display: none; 
+        #quiz-overlay { display: none; margin-top: 20px; }
+        input { padding: 15px; width: 70%; border: 3px solid #ffccd5; border-radius: 20px; font-size: 1.2rem; }
+        button { padding: 15px 30px; background: #ff4757; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; margin-top: 10px; }
+        button:hover { transform: scale(1.05); background: #ff6b81; }
+        
+        /* Hiệu ứng trái tim */
+        .heart { position: absolute; color: #ff4757; animation: float 4s linear infinite; }
+        @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-content">
+    <h2>🎁 Món quà cho cậu</h2>
+    <video id="unboxVideo" controls playsinline>
+        <source src="Messenger_creation_7ACF07CC-939F-4586-A360-6E0919F50592.mp4" type="video/mp4">
+    </video>
+
+    <div id="quiz-overlay">
+        <h3 id="question-text">Giải câu này để xem tiếp nha:</h3>
+        <input type="number" id="answer" placeholder="Đáp án...">
+        <br>
+        <button onclick="checkAnswer()">Gửi đáp án</button>
+    </div>
+</div>
+
+<script>
+    // Thêm trái tim rơi
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 500);
+
+    const video = document.getElementById('unboxVideo');
+    const overlay = document.getElementById('quiz-overlay');
+    const questionText = document.getElementById('question-text');
+    const container = document.getElementById('main-content');
+
+    video.addEventListener('timeupdate', () => {
+        if (video.currentTime >= 10 && !video.paused) {
+            video.pause();
+            overlay.style.display = 'block';
+        }
+    });
+
+    function checkAnswer() {
+        const val = document.getElementById('answer').value;
+        if (val == 10) { // Ví dụ đáp án 10
+            container.innerHTML = `
+                <h2>Bất ngờ nè! 🎶</h2>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/n4r4F3pD0oE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <p style="margin-top:20px;">Mắt Bão - Tọi 💓</p>
+            `;
+        } else {
+            alert("Sai rồi, thử lại nhé! 😋");
+        }
+    }
+</script>
+</body>
+</html>
             margin-top: 15px; 
             padding: 20px; 
             background: #fff5f7; 
@@ -84,7 +149,7 @@
     const questionText = document.getElementById('question-text');
     
     // Mốc giây dừng video
-    const stopTime = 10; 
+    const stopTime = 4; 
     const quizData = [
         { q: "5 + 5 = ?", a: 10 }, { q: "12 * 2 = ?", a: 24 },
         { q: "100 - 20 = ?", a: 80 }, { q: "15 + 15 = ?", a: 30 },
