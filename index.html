@@ -101,13 +101,15 @@
 
     let current = 0;
 
-    video.addEventListener('timeupdate', () => {
+        video.addEventListener('timeupdate', () => {
         if (video.currentTime >= stopTime && !video.paused) {
             video.pause();
+            video.removeAttribute('controls'); // XÓA THANH ĐIỀU KHIỂN ĐỂ KHÔNG ẤN PLAY ĐƯỢC
             overlay.style.display = 'block';
             questionText.innerText = quizData[current].q;
         }
     });
+
 
     function checkAnswer() {
         const val = document.getElementById('answer').value;
@@ -121,7 +123,15 @@
                 // ĐOẠN NÀY ĐỂ NHÚNG VIDEO MẮT BÃO VÀO THAY VÌ CHUYỂN TRANG
                 container.innerHTML = `
                     <h2>Tặng cậu Mắt Bão - Tọi 🎶</h2>
-                    <iframe class="final-video" height="315" src="https://www.youtube.com/watch?v=qxLkN1G7n5A" frameborder="0" allowfullscreen></iframe>
+                    <iframe 
+    class="final-video" 
+    height="315" 
+    src="https://www.youtube.com/embed/qxLkN1G7n5A" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+</iframe>
+
                     <p style="margin-top:10px; color:#ff6b81; font-weight:bold;">Hy vọng cậu thích bài này! 💖</p>
                 `;
             }
