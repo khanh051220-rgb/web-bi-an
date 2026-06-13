@@ -3,62 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Món quà bí mật 💖</title>
+    <title>Gửi cậu món quà bí mật 💖</title>
     <style>
-        body { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; position: relative; }
-        .container { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 500px; z-index: 1; }
-        h2 { color: #ff4757; font-size: 1.5rem; margin-bottom: 20px; }
-        video, iframe { width: 100%; max-width: 100%; border-radius: 20px; border: 4px solid #fff; display: block; margin: 0 auto; }
-        #quiz-overlay { display: none; margin-top: 20px; }
-        input { padding: 12px; width: 80%; border: 2px solid #ffccd5; border-radius: 15px; font-size: 1.1rem; text-align: center; }
-        button { padding: 12px 25px; background: #ff4757; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
-        .heart { position: absolute; color: #ff4757; font-size: 20px; z-index: 0; animation: float 5s linear infinite; }
-        @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+        /* GIỮ NGUYÊN CSS GỐC VÀ THÊM HỌA TIẾT */
+        body { 
+            background: #fff0f5; 
+            background-image: radial-gradient(#ffccd5 1px, transparent 1px);
+            background-size: 20px 20px; /* Thêm họa tiết chấm bi nền */
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 10px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        .container { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(255,105,180,0.3); 
+            text-align: center; 
+            width: 100%; 
+            max-width: 500px;
+            border: 2px solid #ffccd5;
+        }
+        h2 { font-size: 1.2rem; color: #ff6b81; margin-bottom: 15px; }
+        video { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 20px; 
+            border: 3px solid #ffccd5;
+            display: block;
+        }
+        #quiz-overlay { 
+            display: none; 
+            margin-top: 15px; 
+            padding: 20px; 
+            background: #fff5f7; 
+            border-radius: 20px; 
+            border: 2px dashed #ff6b81; 
+        }
+        input { 
+            padding: 15px; 
+            width: 80%; 
+            border: 2px solid #ffccd5; 
+            border-radius: 15px; 
+            font-size: 1.1rem;
+            outline: none; 
+            margin: 10px 0; 
+        }
+        button { 
+            padding: 15px 30px; 
+            background: #ff6b81; 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            font-size: 1rem;
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 85%;
+        }
+        /* THÊM KHUNG VIDEO MẮT BÃO */
+        .final-video { width: 100%; margin-top: 20px; border-radius: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container" id="main-content">
-    <h2>🎁 Món quà cho cậu</h2>
+<div class="container" id="main-container">
+    <h2>🎁 Món quà bất ngờ cho cậu</h2>
     <video id="unboxVideo" controls playsinline>
         <source src="Messenger_creation_7ACF07CC-939F-4586-A360-6E0919F50592.mp4" type="video/mp4">
     </video>
 
     <div id="quiz-overlay">
         <h3 id="question-text">Giải câu này để xem tiếp nha:</h3>
-        <input type="number" id="answer" placeholder="Đáp án...">
+        <input type="number" id="answer" placeholder="Nhập đáp án...">
         <br>
         <button onclick="checkAnswer()">Gửi đáp án</button>
     </div>
 </div>
 
 <script>
-    // Hiệu ứng trái tim
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.innerHTML = '❤️';
-        heart.className = 'heart';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
-    }
-    setInterval(createHeart, 800);
-
     const video = document.getElementById('unboxVideo');
     const overlay = document.getElementById('quiz-overlay');
     const questionText = document.getElementById('question-text');
-    const container = document.getElementById('main-content');
-
-    // DANH SÁCH CÂU HỎI VÀ ĐÁP ÁN
+    const container = document.getElementById('main-container');
+    
+    const stopTime = 10; 
     const quizData = [
-        { q: "5 + 5 = ?", a: 10 },
-        { q: "10 + 10 = ?", a: 20 }
+        { q: "5 + 5 = ?", a: 10 }, { q: "12 * 2 = ?", a: 24 },
+        { q: "100 - 20 = ?", a: 80 }, { q: "15 + 15 = ?", a: 30 },
+        { q: "50 / 2 = ?", a: 25 }, { q: "9 * 9 = ?", a: 81 },
+        { q: "7 + 8 = ?", a: 15 }, { q: "100 / 4 = ?", a: 25 },
+        { q: "12 + 13 = ?", a: 25 }, { q: "10 * 10 = ?", a: 100 }
     ];
+
     let current = 0;
 
     video.addEventListener('timeupdate', () => {
-        if (video.currentTime >= 10 && !video.paused) {
+        if (video.currentTime >= stopTime && !video.paused) {
             video.pause();
             overlay.style.display = 'block';
             questionText.innerText = quizData[current].q;
@@ -74,10 +118,11 @@
             if (current < quizData.length) {
                 questionText.innerText = quizData[current].q;
             } else {
+                // ĐOẠN NÀY ĐỂ NHÚNG VIDEO MẮT BÃO VÀO THAY VÌ CHUYỂN TRANG
                 container.innerHTML = `
-                    <h2>Bất ngờ nè! 🎶</h2>
-                    <iframe src="https://www.youtube.com/embed/n4r4F3pD0oE" frameborder="0" allowfullscreen></iframe>
-                    <p style="margin-top:15px; color:#ff4757;">Mắt Bão - Tọi 💓</p>
+                    <h2>Tặng cậu Mắt Bão - Tọi 🎶</h2>
+                    <iframe class="final-video" height="315" src="https://www.youtube.com/embed/n4r4F3pD0oE" frameborder="0" allowfullscreen></iframe>
+                    <p style="margin-top:10px; color:#ff6b81; font-weight:bold;">Hy vọng cậu thích bài này! 💖</p>
                 `;
             }
         } else {
