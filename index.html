@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Gửi cậu món quà bí mật 💖</title>
+    <style>
+        body { background: #fff0f5; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 20px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255,105,180,0.2); text-align: center; width: 90%; max-width: 600px; }
+        video { width: 100%; border-radius: 20px; border: 4px solid #ffccd5; }
+        #quiz-overlay { display: none; margin-top: 20px; padding: 20px; background: #fff5f7; border-radius: 20px; border: 2px dashed #ff6b81; }
+        input { padding: 12px; width: 60%; border: 2px solid #ffccd5; border-radius: 15px; outline: none; margin: 10px 0; }
+        button { padding: 10px 25px; background: #ff6b81; color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎁 Món quà bất ngờ cho cậu</h2>
+    <video id="unboxVideo" controls>
+        <source src="LINK_VIDEO_CUA_BAN.mp4" type="video/mp4">
+    </video>
+
+    <div id="quiz-overlay">
+        <h3 id="question-text">Giải câu này để xem tiếp nha:</h3>
+        <input type="number" id="answer" placeholder="Đáp án...">
+        <br>
+        <button onclick="checkAnswer()">Gửi đáp án</button>
+    </div>
+</div>
+
+<script>
+    const video = document.getElementById('unboxVideo');
+    const overlay = document.getElementById('quiz-overlay');
+    const questionText = document.getElementById('question-text');
+    
+    // Cấu hình mốc dừng video (giây) và câu hỏi
+    const stopTime = 10; // Thay đổi giây tại đây
+    const quizData = [
+        { q: "5 + 5 = ?", a: 10 }, { q: "12 * 2 = ?", a: 24 },
+        { q: "100 - 20 = ?", a: 80 }, { q: "15 + 15 = ?", a: 30 },
+        { q: "50 / 2 = ?", a: 25 }, { q: "9 * 9 = ?", a: 81 },
+        { q: "7 + 8 = ?", a: 15 }, { q: "100 / 4 = ?", a: 25 },
+        { q: "12 + 13 = ?", a: 25 }, { q: "10 * 10 = ?", a: 100 }
+    ];
+
+    let current = 0;
+
+    video.addEventListener('timeupdate', () => {
+        if (video.currentTime >= stopTime && !video.paused) {
+            video.pause();
+            overlay.style.display = 'block';
+            questionText.innerText = quizData[current].q;
+        }
+    });
+
+    function checkAnswer() {
+        const val = document.getElementById('answer').value;
+        if (parseInt(val) === quizData[current].a) {
+            current++;
+            document.getElementById('answer').value = '';
+            
+            if (current < quizData.length) {
+                questionText.innerText = quizData[current].q;
+            } else {
+                // Hoàn thành hết câu hỏi -> Chuyển hướng YouTube
+                window.location.href = "https://www.youtube.com/watch?v=LINK_BAI_HAT_CUA_BAN";
+            }
+        } else {
+            alert("Sai rồi, thử lại nhé! 😋");
+        }
+    }
+</script>
+</body>
+</html>
