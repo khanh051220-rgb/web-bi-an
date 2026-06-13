@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Món quà bí mật 💖</title>
     <style>
-        /* Hiệu ứng nền */
         body { 
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             min-height: 100vh;
@@ -13,33 +12,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', cursive;
+            font-family: 'Segoe UI', sans-serif;
             overflow-x: hidden;
+            position: relative;
         }
         .container { 
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
             width: 90%;
-            max-width: 600px;
-            backdrop-filter: blur(10px);
+            max-width: 500px;
+            z-index: 1;
         }
-        h2 { color: #ff4757; font-size: 2rem; margin-bottom: 20px; }
+        h2 { color: #ff4757; font-size: 1.5rem; margin-bottom: 20px; }
         video, iframe { 
             width: 100%;
-            border-radius: 25px;
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 100%;
+            border-radius: 20px;
+            border: 4px solid #fff;
+            display: block;
+            margin: 0 auto;
         }
         #quiz-overlay { display: none; margin-top: 20px; }
-        input { padding: 15px; width: 70%; border: 3px solid #ffccd5; border-radius: 20px; font-size: 1.2rem; }
-        button { padding: 15px 30px; background: #ff4757; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; margin-top: 10px; }
-        button:hover { transform: scale(1.05); background: #ff6b81; }
+        input { padding: 12px; width: 80%; border: 2px solid #ffccd5; border-radius: 15px; font-size: 1.1rem; text-align: center; }
+        button { padding: 12px 25px; background: #ff4757; color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
         
-        /* Hiệu ứng trái tim */
-        .heart { position: absolute; color: #ff4757; animation: float 4s linear infinite; }
+        .heart { position: absolute; color: #ff4757; font-size: 20px; z-index: 0; animation: float 5s linear infinite; }
         @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
     </style>
 </head>
@@ -60,7 +60,7 @@
 </div>
 
 <script>
-    // Thêm trái tim rơi
+    // Hiệu ứng trái tim
     function createHeart() {
         const heart = document.createElement('div');
         heart.innerHTML = '❤️';
@@ -70,11 +70,10 @@
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createHeart, 500);
+    setInterval(createHeart, 800);
 
     const video = document.getElementById('unboxVideo');
     const overlay = document.getElementById('quiz-overlay');
-    const questionText = document.getElementById('question-text');
     const container = document.getElementById('main-content');
 
     video.addEventListener('timeupdate', () => {
@@ -86,99 +85,12 @@
 
     function checkAnswer() {
         const val = document.getElementById('answer').value;
-        if (val == 10) { // Ví dụ đáp án 10
+        if (val == 10) {
             container.innerHTML = `
                 <h2>Bất ngờ nè! 🎶</h2>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/n4r4F3pD0oE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                <p style="margin-top:20px;">Mắt Bão - Tọi 💓</p>
+                <iframe src="https://www.youtube.com/embed/n4r4F3pD0oE" frameborder="0" allowfullscreen></iframe>
+                <p style="margin-top:15px; color:#ff4757;">Mắt Bão - Tọi 💓</p>
             `;
-        } else {
-            alert("Sai rồi, thử lại nhé! 😋");
-        }
-    }
-</script>
-</body>
-</html>
-            margin-top: 15px; 
-            padding: 20px; 
-            background: #fff5f7; 
-            border-radius: 20px; 
-            border: 2px dashed #ff6b81; 
-        }
-        input { 
-            padding: 15px; 
-            width: 80%; 
-            border: 2px solid #ffccd5; 
-            border-radius: 15px; 
-            font-size: 1.1rem;
-            outline: none; 
-            margin: 10px 0; 
-        }
-        button { 
-            padding: 15px 30px; 
-            background: #ff6b81; 
-            color: white; 
-            border: none; 
-            border-radius: 15px; 
-            font-size: 1rem;
-            cursor: pointer; 
-            font-weight: bold; 
-            width: 85%;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>🎁 Món quà bất ngờ cho cậu</h2>
-    <video id="unboxVideo" controls playsinline>
-        <source src="Messenger_creation_7ACF07CC-939F-4586-A360-6E0919F50592.mp4" type="video/mp4">
-    </video>
-
-    <div id="quiz-overlay">
-        <h3 id="question-text">Giải câu này để xem tiếp nha:</h3>
-        <input type="number" id="answer" placeholder="Nhập đáp án...">
-        <br>
-        <button onclick="checkAnswer()">Gửi đáp án</button>
-    </div>
-</div>
-
-<script>
-    const video = document.getElementById('unboxVideo');
-    const overlay = document.getElementById('quiz-overlay');
-    const questionText = document.getElementById('question-text');
-    
-    // Mốc giây dừng video
-    const stopTime = 4; 
-    const quizData = [
-        { q: "5 + 5 = ?", a: 10 }, { q: "12 * 2 = ?", a: 24 },
-        { q: "100 - 20 = ?", a: 80 }, { q: "15 + 15 = ?", a: 30 },
-        { q: "50 / 2 = ?", a: 25 }, { q: "9 * 9 = ?", a: 81 },
-        { q: "7 + 8 = ?", a: 15 }, { q: "100 / 4 = ?", a: 25 },
-        { q: "12 + 13 = ?", a: 25 }, { q: "10 * 10 = ?", a: 100 }
-    ];
-
-    let current = 0;
-
-    video.addEventListener('timeupdate', () => {
-        if (video.currentTime >= stopTime && !video.paused) {
-            video.pause();
-            overlay.style.display = 'block';
-            questionText.innerText = quizData[current].q;
-        }
-    });
-
-    function checkAnswer() {
-        const val = document.getElementById('answer').value;
-        if (parseInt(val) === quizData[current].a) {
-            current++;
-            document.getElementById('answer').value = '';
-            
-            if (current < quizData.length) {
-                questionText.innerText = quizData[current].q;
-            } else {
-                window.location.href = "https://www.youtube.com/watch?v=LINK_BAI_HAT_CUA_BAN";
-            }
         } else {
             alert("Sai rồi, thử lại nhé! 😋");
         }
