@@ -2,27 +2,77 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi cậu món quà bí mật 💖</title>
     <style>
-        body { background: #fff0f5; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .container { background: white; padding: 20px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255,105,180,0.2); text-align: center; width: 90%; max-width: 600px; }
-        video { width: 100%; border-radius: 20px; border: 4px solid #ffccd5; }
-        #quiz-overlay { display: none; margin-top: 20px; padding: 20px; background: #fff5f7; border-radius: 20px; border: 2px dashed #ff6b81; }
-        input { padding: 12px; width: 60%; border: 2px solid #ffccd5; border-radius: 15px; outline: none; margin: 10px 0; }
-        button { padding: 10px 25px; background: #ff6b81; color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; }
+        body { 
+            background: #fff0f5; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            padding: 10px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        .container { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(255,105,180,0.2); 
+            text-align: center; 
+            width: 100%; 
+            max-width: 500px; /* Tối ưu cho mobile */
+        }
+        h2 { font-size: 1.2rem; color: #ff6b81; margin-bottom: 15px; }
+        video { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 20px; 
+            border: 3px solid #ffccd5;
+            display: block;
+        }
+        #quiz-overlay { 
+            display: none; 
+            margin-top: 15px; 
+            padding: 20px; 
+            background: #fff5f7; 
+            border-radius: 20px; 
+            border: 2px dashed #ff6b81; 
+        }
+        input { 
+            padding: 15px; 
+            width: 80%; 
+            border: 2px solid #ffccd5; 
+            border-radius: 15px; 
+            font-size: 1.1rem;
+            outline: none; 
+            margin: 10px 0; 
+        }
+        button { 
+            padding: 15px 30px; 
+            background: #ff6b81; 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            font-size: 1rem;
+            cursor: pointer; 
+            font-weight: bold; 
+            width: 85%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>🎁 Món quà bất ngờ cho cậu</h2>
-    <video id="unboxVideo" controls>
+    <video id="unboxVideo" controls playsinline>
         <source src="LINK_VIDEO_CUA_BAN.mp4" type="video/mp4">
     </video>
 
     <div id="quiz-overlay">
         <h3 id="question-text">Giải câu này để xem tiếp nha:</h3>
-        <input type="number" id="answer" placeholder="Đáp án...">
+        <input type="number" id="answer" placeholder="Nhập đáp án...">
         <br>
         <button onclick="checkAnswer()">Gửi đáp án</button>
     </div>
@@ -33,8 +83,8 @@
     const overlay = document.getElementById('quiz-overlay');
     const questionText = document.getElementById('question-text');
     
-    // Cấu hình mốc dừng video (giây) và câu hỏi
-    const stopTime = 10; // Thay đổi giây tại đây
+    // Mốc giây dừng video
+    const stopTime = 10; 
     const quizData = [
         { q: "5 + 5 = ?", a: 10 }, { q: "12 * 2 = ?", a: 24 },
         { q: "100 - 20 = ?", a: 80 }, { q: "15 + 15 = ?", a: 30 },
@@ -62,7 +112,6 @@
             if (current < quizData.length) {
                 questionText.innerText = quizData[current].q;
             } else {
-                // Hoàn thành hết câu hỏi -> Chuyển hướng YouTube
                 window.location.href = "https://www.youtube.com/watch?v=LINK_BAI_HAT_CUA_BAN";
             }
         } else {
